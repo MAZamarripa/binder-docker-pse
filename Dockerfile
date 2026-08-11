@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y \
     liblapack-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 # add the user 
-ARG NB_USER=pseuser
+ARG NB_USER=jovyan
 ARG NB_UID=1000
 ENV USER=${NB_USER}
 ENV NB_UID=${NB_UID}
@@ -46,6 +46,6 @@ ENV PATH="$HOME/prommis/bin:$PATH"
 # SHELL ["/bin/bash", "--login", "-c"]
 RUN echo "source activate prommis" > ~/.bashrc
 RUN conda run -p ${HOME}/prommis python -m ipykernel install --user --name=prommis --display-name="Python (prommis)"
-RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/pseuser/prommis/bin
+RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prommis/bin
 RUN cp -r ${HOME}/prommis/lib/python3.12/site-packages/idaes_examples/notebooks/docs/tut ${HOME}/
 ENTRYPOINT []
