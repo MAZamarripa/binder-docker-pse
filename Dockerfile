@@ -64,10 +64,10 @@ RUN cp -r ${HOME}/prommis/lib/python3.12/site-packages/idaes_examples/notebooks/
 # rename the tutorials for users
 RUN mv ${HOME}/tut ${HOME}/idaes-tutorials
 
-# add the prommis examples
-# RUN cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis/src/prommis/examples ${HOME}/
-# rename for users
-# RUN mv ${HOME}/examples ${HOME}/prommis-examples
+add the prommis examples
+RUN cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis/examples ${HOME}/
+rename for users
+RUN mv ${HOME}/examples ${HOME}/prommis-examples
 
 
 ENTRYPOINT []
