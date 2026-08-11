@@ -1,0 +1,12 @@
+name: prommis
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+    - prommis[ui]
+    - idaes-examples
+    # - git+https://github.com/IDAES/examples.git@2.8_rel
+    # - git+https://github.com/IDAES/prommis.git@scaling_toolbox
