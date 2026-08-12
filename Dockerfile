@@ -1,9 +1,6 @@
-# pull official base image
-# tested successfully with version 24.5.11
-# FROM continuumio/miniconda3:25.3.1-1
 FROM ubuntu:22.04
 
-# Install apt packages
+# Install required apt packages
 RUN apt-get update && apt-get install -y \
     wget \
     build-essential \
@@ -12,8 +9,9 @@ RUN apt-get update && apt-get install -y \
     liblapack3 \
     liblapack-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-# add the user 
-ARG NB_USER=pseuser
+
+    # add the user 
+ARG NB_USER=jovyan
 ARG NB_UID=1000
 ENV USER=${NB_USER}
 ENV NB_UID=${NB_UID}
@@ -28,24 +26,48 @@ RUN adduser --disabled-password \
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
     bash /tmp/miniconda.sh -b -p ${HOME}/conda && \
     rm /tmp/miniconda.sh
+
+# add miniconda to the PATH
 ENV PATH=${HOME}/conda/bin:$PATH
-# copy contents to docker image 
+
+# copy environment file to docker image 
 COPY environment.yml ${HOME}
+
+# change owner of files from root to jovyan for use
 USER root
 RUN chown -R ${NB_UID} ${HOME}
+
+# change user back to jovyan
 USER ${NB_USER}
 
 # set working directory
 WORKDIR ${HOME}
+
+# accept conda tos
 RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
 RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+
+# create conda environment (from the environment.yml file)
 RUN conda env create -f environment.yml --prefix ${HOME}/prommis
+
+# add the environment to the path
 ENV PATH="$HOME/prommis/bin:$PATH"
 
-# RUN conda init bash
-# SHELL ["/bin/bash", "--login", "-c"]
+# add conda environment to the bashrc for automatic initialization
 RUN echo "source activate prommis" > ~/.bashrc
-RUN conda run -p ${HOME}/prommis python -m ipykernel install --user --name=prommis --display-name="Python (prommis)"
-RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/pseuser/prommis/bin
+
+# run idaes get-extensions
+RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prommis/bin
+
+# add the idaes tutorials
 RUN cp -r ${HOME}/prommis/lib/python3.12/site-packages/idaes_examples/notebooks/docs/tut ${HOME}/
+# rename the tutorials for users
+RUN mv ${HOME}/tut ${HOME}/idaes-tutorials
+
+# add the prommis examples
+RUN cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis/examples ${HOME}/
+# rename for users
+RUN mv ${HOME}/examples ${HOME}/prommis-examples
+
+
 ENTRYPOINT []
