@@ -25,9 +25,9 @@ RUN adduser --disabled-password \
 
 # pin the miniconda version so that updates to
 # miniconda don't break it
-ARG MINICONDA_VERSION=26.5.3
+ARG MINICONDA_VERSION=Miniconda3-py314_26.5.3-2-Linux-x86_64.sh
 # install miniconda
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+RUN wget https://repo.anaconda.com/miniconda/${MINICONDA_VERSION} -O /tmp/miniconda.sh && \
     bash /tmp/miniconda.sh -b -p ${HOME}/conda && \
     rm /tmp/miniconda.sh
 
