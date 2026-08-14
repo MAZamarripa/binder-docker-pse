@@ -24,8 +24,14 @@ prommis_source = (
     / "examples"
 )
 
+# programmatic way to do the file structure
+# dictionary of source path keys and destination folder values
+source_destination_dict = {
+    (idaes_source / "core" / "hda_flowsheet.ipynb") :  basic_examples
+    
+}
 
 # then we copy from from the source to the destination
-# hda flowsheet example 
-# copy from idaes to basic examples
-shutil.copy2((idaes_source / "core" / "hda_flowsheet.ipynb"), basic_examples)
+for source, destination in source_destination_dict.items():
+    shutil.copy2(source, destination)
+
