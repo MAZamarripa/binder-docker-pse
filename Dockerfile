@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 
 # Install required apt packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends\
     wget \
     build-essential \
     git \
@@ -22,8 +22,11 @@ RUN adduser --disabled-password \
     --uid ${NB_UID} \
     ${NB_USER}
 
+# pin the miniconda version so that updates to
+# miniconda don't break it
+ARG MINICONDA_VERSION=26.5.3
 # install miniconda
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-${MINICONDA_VERSION}-Linux-x86_64.sh -O /tmp/miniconda.sh && \
     bash /tmp/miniconda.sh -b -p ${HOME}/conda && \
     rm /tmp/miniconda.sh
 
@@ -43,12 +46,11 @@ USER ${NB_USER}
 # set working directory
 WORKDIR ${HOME}
 
-# accept conda tos
-RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
-RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
-
-# create conda environment (from the environment.yml file)
-RUN conda env create -f environment.yml --prefix ${HOME}/prommis
+# accept conda tos and create conda environment
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
+    conda env create -f environment.yml --prefix ${HOME}/prommis && \
+    conda clean -afy
 
 # add the environment to the path
 ENV PATH="$HOME/prommis/bin:$PATH"
@@ -59,15 +61,8 @@ RUN echo "source activate prommis" > ~/.bashrc
 # run idaes get-extensions
 RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prommis/bin
 
-# add the idaes tutorials
-RUN cp -r ${HOME}/prommis/lib/python3.12/site-packages/idaes_examples/notebooks/docs/tut ${HOME}/
-# rename the tutorials for users
-RUN mv ${HOME}/tut ${HOME}/idaes-tutorials
-
-# add the prommis examples
-RUN cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis/examples ${HOME}/
-# rename for users
-RUN mv ${HOME}/examples ${HOME}/prommis-examples
+# later delete it, but you can test/develop this python file on binder 
+RUN python "${HOME}/create_examples_structure.py" 
 
 
 ENTRYPOINT []
