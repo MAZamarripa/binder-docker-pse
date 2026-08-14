@@ -3,13 +3,23 @@ import shutil
 import idaes_examples
 import prommis
 
-home = Path.home()
-# create all of the folders
-basic_examples = home / "Basic Examples"
-flowsheets = home / "Flowsheets"
-integrated_process_design_and_market_interactions = home / "Integrated Process Design and Market Interactions"
+def create_directory(folder_name):
+    new_folder = Path(Path().home() / folder_name)
+    new_folder.mkdir(parents=True, exist_ok=True)
+    return new_folder
 
-# ...  for the other folders
+home = Path.home()
+
+# create the folders that the user will see
+parent_folders = [
+    "Basic Examples", 
+    "Flowsheets", 
+    "Integrated Process Design and Market Interactions"
+]
+
+parent_folder_paths = {
+    parent_folder : create_directory(parent_folder) for parent_folder in parent_folders
+}
 
 # these define paths on the system where the examples live
 idaes_source = (
@@ -26,8 +36,10 @@ prommis_source = (
 
 # programmatic way to do the file structure
 # dictionary of source path keys and destination folder values
+# you just need to augment this dictionary with a map of 
+# the source of the file and its final destination
 source_destination_dict = {
-    (idaes_source / "core" / "hda_flowsheet.ipynb") :  basic_examples
+    (idaes_source / "core" / "hda_flowsheet.ipynb") :  parent_folder_paths["Basic Examples"]
     
 }
 
