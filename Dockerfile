@@ -63,7 +63,7 @@ RUN echo "source activate prommis" > ~/.bashrc
 RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prommis/bin
 
 # copy the python file
-COPY --chown=${NB_UID}:${NB_UID} prepare_examples.py ${HOME}/prepare_examples.py
+COPY --chown=${NB_UID}:${NB_UID} create_examples_structure.py ${HOME}/create_examples_structure.py
 
 # later delete it, but you can test/develop this python file on binder 
 RUN python "${HOME}/create_examples_structure.py" 
