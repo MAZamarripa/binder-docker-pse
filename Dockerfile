@@ -3,6 +3,7 @@ FROM ubuntu:22.04
 # Install required apt packages
 RUN apt-get update && apt-get install -y --no-install-recommends\
     wget \
+    ca-certificates \
     build-essential \
     git \
     libgfortran5 \
