@@ -5,8 +5,10 @@ channels:
 dependencies:
   - python=3.12
   - pip
+  - reaktoro
+  - cyipopt
   - pip:
-    - prommis[ui]
-    - idaes-examples
+      - "prommis[ui,watertap]"
+      - idaes-examples
     # - git+https://github.com/IDAES/examples.git@2.8_rel
     # - git+https://github.com/IDAES/prommis.git@scaling_toolbox
