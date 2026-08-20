@@ -5,8 +5,8 @@ channels:
 dependencies:
   - python=3.12
   - pip
-  - reaktoro
-  - cyipopt
+  - reaktoro=2.13.0
+  - cyipopt=1.7.0
   - pip:
       - "prommis[ui,watertap]"
       - idaes-examples
