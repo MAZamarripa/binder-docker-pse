@@ -56,11 +56,31 @@ RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkg
 # add the environment to the path
 ENV PATH="$HOME/prommis/bin:$PATH"
 
-# add conda environment to the bashrc for automatic initialization
-RUN echo "source activate prommis" > ~/.bashrc
+# keep the prefix-based environment first when Bash starts
+RUN echo 'export PATH="$HOME/prommis/bin:$PATH"' > ~/.bashrc
 
 # run idaes get-extensions
 RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prommis/bin
+
+# clone ProMMiS sources for docs/tutorials
+ARG PROMMIS_REF=main
+RUN git clone --depth 1 --branch "${PROMMIS_REF}" \
+    https://github.com/prommis/prommis.git \
+    "${HOME}/prommis-source"
+
+# clone the watertap repository for tutorials
+ARG WATERTAP_REF=main
+RUN git clone --depth 1 --branch "${WATERTAP_REF}" \
+    https://github.com/watertap-org/watertap.git \
+    "${HOME}/watertap"
+
+# copy the jupyter server config file
+COPY --chown=${NB_UID}:${NB_UID} jupyter_server_config.py \
+    /home/jovyan/.jupyter/jupyter_server_config.py
+
+# copy manifest files used by the structure script
+COPY --chown=${NB_UID}:${NB_UID} repos.yaml ${HOME}/repos.yaml
+COPY --chown=${NB_UID}:${NB_UID} tutorials.yaml ${HOME}/tutorials.yaml
 
 # copy the python file
 COPY --chown=${NB_UID}:${NB_UID} create_examples_structure.py ${HOME}/create_examples_structure.py
