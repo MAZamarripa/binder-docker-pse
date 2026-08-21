@@ -1,0 +1,98 @@
+# The structure of the tutorials and examples is defined in this file. Each entry defines a folder or a file to be created in the binder environment. The 'create_only' flag indicates that only the folder should be created, while the 'repo' and 'source' fields specify the source repository and file to be copied to the destination.
+- name: folder_basic_examples_idaes
+  destination: Basic Examples/IDAES
+  create_only: true
+
+- name: folder_basic_examples_prommis
+  destination: Basic Examples/ProMMiS
+  create_only: true
+
+- name: folder_basic_examples_watertap
+  destination: Basic Examples/WaterTAP
+  create_only: true
+
+- name: folder_flowsheets_power_plant
+  destination: Flowsheets/Power Plant
+  create_only: true
+
+- name: folder_flowsheets_water_treatment
+  destination: Flowsheets/Water Treatment
+  create_only: true
+
+- name: folder_flowsheets_critical_minerals
+  destination: Flowsheets/Critical Minerals
+  create_only: true
+
+- name: folder_flowsheets_co2_to_chemicals
+  destination: Flowsheets/CO2 to chemicals
+  create_only: true
+
+- name: folder_flowsheets_integrated_process_design_market
+  destination: Flowsheets/Integrated Process Design and Market Interactions
+  create_only: true
+
+- name: folder_workshop_basic_python
+  destination: PSE Workshop/Basic Python + Jupyter Notebooks
+  create_only: true
+
+- name: folder_workshop_build_flowsheet
+  destination: PSE Workshop/Build Flowsheet and Unit Models in IDAES
+  create_only: true
+
+- name: folder_workshop_sim_sensitivity_opt
+  destination: PSE Workshop/Simulation, Sensitivity Analysis, and Optimization
+  create_only: true
+
+- name: folder_integrated_process_design_and_market_interactions_ngcc
+  destination: Integrated Process Design and Market Interactions/NGCC
+  create_only: true
+
+- name: folder_integrated_process_design_and_market_interactions_coal_battery_storage
+  destination: Integrated Process Design and Market Interactions/Coal + Battery Storage
+  create_only: true
+
+- name: folder_integrated_process_design_and_market_interactions_nuclear_plus_x
+  destination: Integrated Process Design and Market Interactions/Nuclear + X
+  create_only: true
+
+- name: hda_flowsheet
+  repo: idaes_examples
+  source: core/hda_flowsheet.ipynb
+  destination: Basic Examples/IDAES
+
+# We can rethink the strucutre of tutorials and examples, I've just put them in the Basic Examples/ProMMiS folder for now, but we can consider additional difficulty-based subfolders or other structures (e.g., Basic, Intermediate, Advanced).
+- name: detailed_chemistry_solution
+  repo: prommis_source
+  source: detailed_chemistry_integration_tutorial-solution.ipynb
+  destination: Basic Examples/ProMMiS/Detailed Chemistry Integration
+
+- name: customized_liquid_properties
+  repo: prommis_source
+  source: customized_liquid_properties.py
+  destination: Basic Examples/ProMMiS/Detailed Chemistry Integration
+
+- name: customized_solids_properties
+  repo: prommis_source
+  source: customized_solids_properties.py
+  destination: Basic Examples/ProMMiS/Detailed Chemistry Integration
+
+- name: precipitation_pfd
+  repo: prommis_source
+  source: precipitation_pfd.png
+  destination: Basic Examples/ProMMiS/Detailed Chemistry Integration
+
+# Watertap tutorials: this can trimmed down to just the tutorials we want to include in the binder build, but for now we will include all of them
+# - name: watertap_tutorials
+#   repo: watertap
+#   source: tutorials
+#   destination: Basic Examples/WaterTAP
+
+# - name: watertap_tutorial_assets
+#   repo: watertap
+#   source: docs/_static
+#   destination: Basic Examples/WaterTAP/docs
+
+# - name: watertap_tutorial_flowsheet_assets
+#   repo: watertap
+#   source: watertap/flowsheets/METAB
+#   destination: Basic Examples/WaterTAP/watertap/flowsheets
