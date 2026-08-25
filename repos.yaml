@@ -1,0 +1,13 @@
+- name: idaes_examples
+  package: idaes_examples
+  relative_path: notebooks/docs/tut
+
+- name: prommis
+  package: prommis
+  relative_path: examples
+
+- name: prommis_source
+  path: ${HOME}/prommis-source/docs/tutorials
+
+- name: watertap
+  path: ${HOME}/watertap
