@@ -1,8 +1,9 @@
 FROM ubuntu:22.04
 
 # Install required apt packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends\
     wget \
+    ca-certificates \
     build-essential \
     git \
     libgfortran5 \
@@ -22,8 +23,11 @@ RUN adduser --disabled-password \
     --uid ${NB_UID} \
     ${NB_USER}
 
+# pin the miniconda version so that updates to
+# miniconda don't break it
+ARG MINICONDA_VERSION=Miniconda3-py314_26.5.3-2-Linux-x86_64.sh
 # install miniconda
-RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+RUN wget https://repo.anaconda.com/miniconda/${MINICONDA_VERSION} -O /tmp/miniconda.sh && \
     bash /tmp/miniconda.sh -b -p ${HOME}/conda && \
     rm /tmp/miniconda.sh
 
@@ -43,31 +47,46 @@ USER ${NB_USER}
 # set working directory
 WORKDIR ${HOME}
 
-# accept conda tos
-RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
-RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
-
-# create conda environment (from the environment.yml file)
-RUN conda env create -f environment.yml --prefix ${HOME}/prommis
+# accept conda tos and create conda environment
+RUN conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main && \
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r && \
+    conda env create -f environment.yml --prefix ${HOME}/prommis && \
+    conda clean -afy
 
 # add the environment to the path
 ENV PATH="$HOME/prommis/bin:$PATH"
 
-# add conda environment to the bashrc for automatic initialization
-RUN echo "source activate prommis" > ~/.bashrc
+# keep the prefix-based environment first when Bash starts
+RUN echo 'export PATH="$HOME/prommis/bin:$PATH"' > ~/.bashrc
 
 # run idaes get-extensions
 RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prommis/bin
 
-# add the idaes tutorials
-RUN cp -r ${HOME}/prommis/lib/python3.12/site-packages/idaes_examples/notebooks/docs/tut ${HOME}/
-# rename the tutorials for users
-RUN mv ${HOME}/tut ${HOME}/idaes-tutorials
+# clone ProMMiS sources for docs/tutorials
+ARG PROMMIS_REF=main
+RUN git clone --depth 1 --branch "${PROMMIS_REF}" \
+    https://github.com/prommis/prommis.git \
+    "${HOME}/prommis-source"
 
-# add the prommis examples
-RUN cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis/examples ${HOME}/
-# rename for users
-RUN mv ${HOME}/examples ${HOME}/prommis-examples
+# clone the watertap repository for tutorials
+ARG WATERTAP_REF=main
+RUN git clone --depth 1 --branch "${WATERTAP_REF}" \
+    https://github.com/watertap-org/watertap.git \
+    "${HOME}/watertap"
+
+# copy the jupyter server config file
+COPY --chown=${NB_UID}:${NB_UID} jupyter_server_config.py \
+    /home/jovyan/.jupyter/jupyter_server_config.py
+
+# copy manifest files used by the structure script
+COPY --chown=${NB_UID}:${NB_UID} repos.yaml ${HOME}/repos.yaml
+COPY --chown=${NB_UID}:${NB_UID} tutorials.yaml ${HOME}/tutorials.yaml
+
+# copy the python file
+COPY --chown=${NB_UID}:${NB_UID} create_examples_structure.py ${HOME}/create_examples_structure.py
+
+# later delete it, but you can test/develop this python file on binder 
+RUN python "${HOME}/create_examples_structure.py" 
 
 
 ENTRYPOINT []

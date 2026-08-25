@@ -1,0 +1,52 @@
+# Git and editor metadata
+.git
+.gitignore
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Jupyter and notebook artifacts
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Local environment and secrets
+.env
+.env.*
+*.pem
+*.key
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build and generated outputs
+build/
+dist/
+*.egg-info/
+.eggs/
+.coverage
+.coverage.*
+htmlcov/
+
+# Docker local files
+Dockerfile.local
+
+authoring/
+repos/
+*.tar
+*.tgz
+*.zip
