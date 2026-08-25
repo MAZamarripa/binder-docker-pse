@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends\
     liblapack-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-    # add the user 
+# add the user 
 ARG NB_USER=jovyan
 ARG NB_UID=1000
 ENV USER=${NB_USER}
