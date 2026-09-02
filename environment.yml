@@ -9,7 +9,7 @@ dependencies:
   - reaktoro=2.13.0
   - cyipopt=1.7.0
   - pip:
-    - "prommis[ui,watertap]"
+    - "prommis[ui,dev,watertap]"
     - idaes-examples
     # - git+https://github.com/IDAES/examples.git@2.8_rel
     # - git+https://github.com/IDAES/prommis.git@scaling_toolbox
