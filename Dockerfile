@@ -67,7 +67,7 @@ ARG PROMMIS_REF=main
 
 # copy the repository files into the correct destinations
 RUN mkdir ${HOME}/watertap && \
-    cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis/watertap ${HOME}/watertap
+    cp -r ${HOME}/prommis/lib/python3.12/site-packages/watertap ${HOME}/watertap
 
 RUN mkdir ${HOME}/prommis-source && \
     cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis ${HOME}/prommis-source
