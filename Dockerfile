@@ -85,7 +85,7 @@ COPY --chown=${NB_UID}:${NB_UID} create_examples_structure.py ${HOME}/create_exa
 
 # later delete it, but you can test/develop this python file on binder 
 RUN python "${HOME}/create_examples_structure.py" && \
-    rm "${HOME}/create_examples_structure.py
+    rm ${HOME}/create_examples_structure.py
 
 
 ENTRYPOINT []
