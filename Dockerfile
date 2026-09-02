@@ -84,7 +84,7 @@ COPY --chown=${NB_UID}:${NB_UID} tutorials.yaml ${HOME}/tutorials.yaml
 COPY --chown=${NB_UID}:${NB_UID} create_examples_structure.py ${HOME}/create_examples_structure.py
 
 # later delete it, but you can test/develop this python file on binder 
-RUN python "${HOME}/create_examples_structure.py" 
+# RUN python "${HOME}/create_examples_structure.py" 
 
 
 ENTRYPOINT []
