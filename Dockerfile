@@ -65,16 +65,12 @@ RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prom
 # clone ProMMiS sources for docs/tutorials
 ARG PROMMIS_REF=main
 
-RUN GIT_TERMINAL_PROMPT=0 \
-    git clone --depth 1 --branch "{PROMMIS_REF}" \
-    https://github.com/prommis/prommis.git \
-    "${HOME}/prommis-source"
+# copy the repository files into the correct destinations
+RUN mkdir ${HOME}/watertap && \
+    cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis ${HOME}/watertap
 
-# clone the watertap repository for tutorials
-ARG WATERTAP_REF=main
-RUN git clone --depth 1 --branch "${WATERTAP_REF}" \
-    https://github.com/watertap-org/watertap.git \
-    "${HOME}/watertap"
+RUN mkdir ${HOME}/prommis-source && \
+    cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis ${HOME}/prommis-source
 
 # copy the jupyter server config file
 COPY --chown=${NB_UID}:${NB_UID} jupyter_server_config.py \
