@@ -67,7 +67,7 @@ ARG PROMMIS_REF=main
 
 # copy the repository files into the correct destinations
 RUN mkdir ${HOME}/watertap && \
-    cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis ${HOME}/watertap
+    cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis/watertap ${HOME}/watertap
 
 RUN mkdir ${HOME}/prommis-source && \
     cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis ${HOME}/prommis-source
@@ -84,7 +84,8 @@ COPY --chown=${NB_UID}:${NB_UID} tutorials.yaml ${HOME}/tutorials.yaml
 COPY --chown=${NB_UID}:${NB_UID} create_examples_structure.py ${HOME}/create_examples_structure.py
 
 # later delete it, but you can test/develop this python file on binder 
-# RUN python "${HOME}/create_examples_structure.py" 
+RUN python "${HOME}/create_examples_structure.py" && \
+    rm "${HOME}/create_examples_structure.py
 
 
 ENTRYPOINT []
