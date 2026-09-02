@@ -64,13 +64,27 @@ RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prom
 
 # clone ProMMiS sources for docs/tutorials
 ARG PROMMIS_REF=main
+ARG WATERTAP_REF=main
 
 # copy the repository files into the correct destinations
-RUN mkdir ${HOME}/watertap && \
-    cp -r ${HOME}/prommis/lib/python3.12/site-packages/watertap/* ${HOME}/watertap
+RUN wget -q \
+    "https://github.com/watertap-org/watertap/archive/refs/heads/${WATERTAP_REF}.tar.gz" \
+    -O /tmp/watertap.tar.gz \
+    && mkdir -p "${HOME}/watertap" \
+    && tar -xzf /tmp/watertap.tar.gz \
+        --strip-components=1 \
+        -C "${HOME}/watertap" \
+    && rm /tmp/watertap.tar.gz
 
-RUN mkdir ${HOME}/prommis-source && \
-    cp -r ${HOME}/prommis/lib/python3.12/site-packages/prommis/* ${HOME}/prommis-source
+# download the repository files into the correct filepaths
+RUN wget -q \
+    https://github.com/prommis/prommis/archive/refs/heads/${PROMMIS_REF}.tar.gz \
+    -O /tmp/prommis.tar.gz \
+    && mkdir -p "${HOME}/prommis-source" \
+    && tar -xzf /tmp/prommis.tar.gz \
+        --strip-components=1 \
+        -C "${HOME}/prommis-source" \
+    && rm /tmp/prommis.tar.gz
 
 # copy the jupyter server config file
 COPY --chown=${NB_UID}:${NB_UID} jupyter_server_config.py \
