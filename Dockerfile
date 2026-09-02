@@ -68,7 +68,7 @@ ARG PROMMIS_REF=main
 RUN GIT_TERMINAL_PROMPT=0 \
     git clone --depth 1 --branch "{PROMMIS_REF}" \
     https://github.com/prommis/prommis.git \
-    "${HOME}/prommis-source
+    "${HOME}/prommis-source"
 
 # clone the watertap repository for tutorials
 ARG WATERTAP_REF=main
