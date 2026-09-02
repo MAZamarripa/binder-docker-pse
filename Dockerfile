@@ -64,9 +64,11 @@ RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prom
 
 # clone ProMMiS sources for docs/tutorials
 ARG PROMMIS_REF=main
-RUN git clone --depth 1 --branch "${PROMMIS_REF}" \
+
+RUN GIT_TERMINAL_PROMPT=0 \
+    git clone --depth 1 --branch main \
     https://github.com/prommis/prommis.git \
-    "${HOME}/prommis-source"
+    /home/jovyan/prommis-source
 
 # clone the watertap repository for tutorials
 ARG WATERTAP_REF=main
