@@ -64,15 +64,27 @@ RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prom
 
 # clone ProMMiS sources for docs/tutorials
 ARG PROMMIS_REF=main
-RUN git clone --depth 1 --branch "${PROMMIS_REF}" \
-    https://github.com/prommis/prommis.git \
-    "${HOME}/prommis-source"
-
-# clone the watertap repository for tutorials
 ARG WATERTAP_REF=main
-RUN git clone --depth 1 --branch "${WATERTAP_REF}" \
-    https://github.com/watertap-org/watertap.git \
-    "${HOME}/watertap"
+
+# copy the repository files into the correct destinations
+RUN wget -q \
+    "https://github.com/watertap-org/watertap/archive/refs/heads/${WATERTAP_REF}.tar.gz" \
+    -O /tmp/watertap.tar.gz \
+    && mkdir -p "${HOME}/watertap" \
+    && tar -xzf /tmp/watertap.tar.gz \
+        --strip-components=1 \
+        -C "${HOME}/watertap" \
+    && rm /tmp/watertap.tar.gz
+
+# download the repository files into the correct filepaths
+RUN wget -q \
+    https://github.com/prommis/prommis/archive/refs/heads/${PROMMIS_REF}.tar.gz \
+    -O /tmp/prommis.tar.gz \
+    && mkdir -p "${HOME}/prommis-source" \
+    && tar -xzf /tmp/prommis.tar.gz \
+        --strip-components=1 \
+        -C "${HOME}/prommis-source" \
+    && rm /tmp/prommis.tar.gz
 
 # copy the jupyter server config file
 COPY --chown=${NB_UID}:${NB_UID} jupyter_server_config.py \
@@ -86,7 +98,8 @@ COPY --chown=${NB_UID}:${NB_UID} tutorials.yaml ${HOME}/tutorials.yaml
 COPY --chown=${NB_UID}:${NB_UID} create_examples_structure.py ${HOME}/create_examples_structure.py
 
 # later delete it, but you can test/develop this python file on binder 
-RUN python "${HOME}/create_examples_structure.py" 
+RUN python "${HOME}/create_examples_structure.py" && \
+    rm ${HOME}/create_examples_structure.py
 
 
 ENTRYPOINT []
