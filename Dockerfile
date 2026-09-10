@@ -93,6 +93,7 @@ COPY --chown=${NB_UID}:${NB_UID} jupyter_server_config.py \
 # copy manifest files used by the structure script
 COPY --chown=${NB_UID}:${NB_UID} repos.yaml ${HOME}/repos.yaml
 COPY --chown=${NB_UID}:${NB_UID} tutorials.yaml ${HOME}/tutorials.yaml
+COPY --chown=${NB_UID}:${NB_UID} tutorials_pse_workshop.yaml ${HOME}/tutorials_pse_workshop.yaml
 
 # copy the python file
 COPY --chown=${NB_UID}:${NB_UID} create_examples_structure.py ${HOME}/create_examples_structure.py
