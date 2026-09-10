@@ -1,6 +1,6 @@
 - name: idaes_examples
   package: idaes_examples
-  relative_path: notebooks/docs/tut
+  relative_path: notebooks/docs/
 
 - name: prommis
   package: prommis
