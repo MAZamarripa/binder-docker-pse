@@ -77,3 +77,8 @@
   repo: prommis_source
   source: uky_flowsheet_low_recovery.py
   destination: PSE Workshop 2026/Supplementary Tutorials/UKy Flowsheet
+
+- name: simple_diafiltration_tutorial
+  repo: doe-greybox-paper
+  source: simple_diafiltration_tutorial.ipynb
+  destination: PSE Workshop 2026/Supplementary Tutorials
