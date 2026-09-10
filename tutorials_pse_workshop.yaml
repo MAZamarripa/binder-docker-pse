@@ -1,0 +1,79 @@
+- name: intro_tutorial
+  repo: idaes_examples
+  source: tut/introduction_short_doc.ipynb
+  destination: PSE Workshop 2026/Tutorials
+
+- name: intro_tutorial_script
+  repo: idaes_examples
+  source: tut/notebook_test_script.py
+  destination: PSE Workshop 2026/Tutorials
+
+- name: intro_tutorial_solution
+  repo: idaes_examples
+  source: tut/introduction_short_solution.ipynb
+  destination: PSE Workshop 2026/Tutorials Solution
+
+- name: intro_tutorial_solution_script
+  repo: idaes_examples
+  source: tut/notebook_test_script.py
+  destination: PSE Workshop 2026/Tutorials Solution
+
+- name: unit_model_tutorial
+  repo: idaes_examples
+  source: tut/core/flash_unit_doc.ipynb
+  destination: PSE Workshop 2026/Tutorials
+
+# - name: unit_model_tutorial_solution
+#   repo: idaes_examples
+#   source: tut/core/flash_unit_solution.ipynb
+#   destination: PSE Workshop 2026/Tutorials Solution
+
+- name: parameter_estimation_tutorial
+  repo: idaes_examples
+  source: param_est/parameter_estimation_nrtl_using_unit_model_solution.ipynb
+  destination: PSE Workshop 2026/Supplementary Tutorials
+
+- name: diagnostics_tutorial
+  repo: idaes_examples
+  source: diagnostics/diagnostics_toolbox_doc.ipynb
+  destination: PSE Workshop 2026/Supplementary Tutorials
+
+- name: scaling_tutorial
+  repo: idaes_examples
+  source: scaling/scaler_workshop_doc.ipynb
+  destination: PSE Workshop 2026/Supplementary Tutorials/Scaling
+
+# - name: advanced_scaling_tutorial
+#   repo: idaes_examples
+#   source: scaling/advanced_scaling_techniques_doc.ipynb
+#   destination: PSE Workshop 2026/Supplementary Tutorials/Scaling
+
+- name: costing_tutorial
+  repo: prommis_source
+  source: costing_basic_features-solution.ipynb
+  destination: PSE Workshop 2026/Supplementary Tutorials/Costing
+
+- name: costing_advanced_tutorial
+  repo: prommis_source
+  source: costing_advanced_features-solution.ipynb
+  destination: PSE Workshop 2026/Supplementary Tutorials/Costing
+
+- name: UKy_flowsheet_tutorial
+  repo: prommis_source
+  source: costing_uky_flowsheet-solution.ipynb
+  destination: PSE Workshop 2026/Supplementary Tutorials/UKy Flowsheet
+
+- name: UKy_flowsheet_optimization_tutorial
+  repo: prommis_source
+  source: uky_flowsheet_optimization-solution.ipynb
+  destination: PSE Workshop 2026/Supplementary Tutorials/UKy Flowsheet
+
+- name: UKy_flowsheet_image
+  repo: prommis_source
+  source: uky_flowsheet.png
+  destination: PSE Workshop 2026/Supplementary Tutorials/UKy Flowsheet
+
+- name: UKy_flowsheet_optimization_low_recovery_model
+  repo: prommis_source
+  source: uky_flowsheet_low_recovery.py
+  destination: PSE Workshop 2026/Supplementary Tutorials/UKy Flowsheet
