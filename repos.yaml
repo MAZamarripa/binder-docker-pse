@@ -11,3 +11,6 @@
 
 - name: watertap
   path: ${HOME}/watertap
+
+- name: doe-greybox-paper
+  path: ${HOME}/doe-greybox-paper/case_studies/membrane_seps
