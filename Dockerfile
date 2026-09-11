@@ -65,6 +65,7 @@ RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prom
 # clone ProMMiS sources for docs/tutorials
 ARG PROMMIS_REF=main
 ARG WATERTAP_REF=main
+ARG DOE_REF=main
 
 # copy the repository files into the correct destinations
 RUN wget -q \
@@ -86,13 +87,24 @@ RUN wget -q \
         -C "${HOME}/prommis-source" \
     && rm /tmp/prommis.tar.gz
 
+# copy the repository files into the correct destinations
+RUN wget -q \
+    https://github.com/dowlinglab/doe-greybox-paper/archive/refs/heads/${DOE_REF}.tar.gz \
+    -O /tmp/doe.tar.gz \
+    && mkdir -p "${HOME}/doe-greybox-paper" \
+    && tar -xzf /tmp/doe.tar.gz \
+        --strip-components=1 \
+        -C "${HOME}/doe-greybox-paper" \
+    && rm /tmp/doe.tar.gz
+
 # copy the jupyter server config file
 COPY --chown=${NB_UID}:${NB_UID} jupyter_server_config.py \
     /home/jovyan/.jupyter/jupyter_server_config.py
 
 # copy manifest files used by the structure script
 COPY --chown=${NB_UID}:${NB_UID} repos.yaml ${HOME}/repos.yaml
-COPY --chown=${NB_UID}:${NB_UID} tutorials.yaml ${HOME}/tutorials.yaml
+# COPY --chown=${NB_UID}:${NB_UID} tutorials.yaml ${HOME}/tutorials.yaml
+COPY --chown=${NB_UID}:${NB_UID} tutorials_pse_workshop.yaml ${HOME}/tutorials_pse_workshop.yaml
 
 # copy the python file
 COPY --chown=${NB_UID}:${NB_UID} create_examples_structure.py ${HOME}/create_examples_structure.py

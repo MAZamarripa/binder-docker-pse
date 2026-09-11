@@ -7,7 +7,9 @@ from pathlib import Path
 import yaml
 
 REPO_MANIFEST = Path(__file__).with_name("repos.yaml")
-TUTORIAL_MANIFEST = Path(__file__).with_name("tutorials.yaml")
+# TUTORIAL_MANIFEST = Path(__file__).with_name("tutorials.yaml")
+# PSE Workshop: use the PSE Workshop manifest instead of the default tutorials manifest
+TUTORIAL_MANIFEST = Path(__file__).with_name("tutorials_pse_workshop.yaml")
 
 
 def create_directory(parent: Path, folder_name: str) -> Path:
