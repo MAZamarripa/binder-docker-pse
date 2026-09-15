@@ -28,6 +28,38 @@
 #   source: tut/core/flash_unit_solution.ipynb
 #   destination: PSE Workshop 2026/Tutorials Solution
 
+- name: PSE2026_Tutorial_parameter_estimation_tutorial
+  path: /home/jovyan/tutorials/parameter_estimation_tutorial-exercise.ipynb
+  destination: PSE Workshop 2026/Tutorials
+
+- name: PSE2026_Tutorial_parameter_estimation_tutorial_solution
+  path: /home/jovyan/tutorials/parameter_estimation_tutorial-solution.ipynb
+  destination: PSE Workshop 2026/Tutorials Solution
+
+- name: PSE2026_Tutorial_precipitation_unit_model_tutorial
+  path: /home/jovyan/tutorials/precipitator_unit_model_tutorial-exercise.ipynb
+  destination: PSE Workshop 2026/Tutorials
+
+- name: PSE2026_Tutorial_precipitation_unit_model_tutorial_solution
+  path: /home/jovyan/tutorials/precipitator_unit_model_tutorial-solution.ipynb
+  destination: PSE Workshop 2026/Tutorials Solution
+
+- name: PSE2026_Tutorial_figure_tutorial
+  path: /home/jovyan/tutorials/unit.png
+  destination: PSE Workshop 2026/Tutorials
+
+- name: PSE2026_Tutorial_figure_tutorial_solution
+  path: /home/jovyan/tutorials/unit.png
+  destination: PSE Workshop 2026/Tutorials Solution
+
+- name: PSE2026_Tutorial_data_file
+  path: /home/jovyan/tutorials/data_precipitation.csv
+  destination: PSE Workshop 2026/Tutorials
+
+- name: PSE2026_Tutorial_data_file_solution
+  path: /home/jovyan/tutorials/data_precipitation.csv
+  destination: PSE Workshop 2026/Tutorials Solution
+
 - name: parameter_estimation_tutorial
   repo: idaes_examples
   source: param_est/parameter_estimation_nrtl_using_unit_model_solution.ipynb
@@ -82,3 +114,23 @@
   repo: doe-greybox-paper
   source: simple_diafiltration_tutorial.ipynb
   destination: PSE Workshop 2026/Supplementary Tutorials
+
+# - name: detailed_chemistry_solution
+#   repo: prommis_source
+#   source: detailed_chemistry_integration_tutorial-solution.ipynb
+#   destination: PSE Workshop 2026/Supplementary Tutorials/Detailed Chemistry Integration
+
+# - name: customized_liquid_properties
+#   repo: prommis_source
+#   source: customized_liquid_properties.py
+#   destination: PSE Workshop 2026/Supplementary Tutorials/Detailed Chemistry Integration
+
+# - name: customized_solids_properties
+#   repo: prommis_source
+#   source: customized_solids_properties.py
+#   destination: PSE Workshop 2026/Supplementary Tutorials/Detailed Chemistry Integration
+
+# - name: precipitation_pfd
+#   repo: prommis_source
+#   source: precipitation_pfd.png
+#   destination: PSE Workshop 2026/Supplementary Tutorials/Detailed Chemistry Integration
