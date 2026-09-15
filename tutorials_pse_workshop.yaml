@@ -65,6 +65,11 @@
   source: param_est/parameter_estimation_nrtl_using_unit_model_solution.ipynb
   destination: PSE Workshop 2026/Supplementary Tutorials
 
+- name: parameter_estimation_tutorial_data
+  repo: idaes_examples
+  source: param_est/BT_NRTL_dataset.csv
+  destination: PSE Workshop 2026/Supplementary Tutorials
+
 - name: diagnostics_tutorial
   repo: idaes_examples
   source: diagnostics/diagnostics_toolbox_doc.ipynb
