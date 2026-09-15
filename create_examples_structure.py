@@ -109,20 +109,23 @@ def main():
         if tutorial.get("create_only"):
             continue
 
-        repo_name = tutorial.get("repo")
-        source_rel = tutorial.get("source")
-        if not repo_name or not source_rel:
-            raise KeyError(
-                f"Tutorial {tutorial.get('name', '<unnamed>')} must define repo and source unless create_only is true."
-            )
+        if "path" in tutorial:
+            source_path = Path(os.path.expandvars(tutorial["path"]))
+        else:
+            repo_name = tutorial.get("repo")
+            source_rel = tutorial.get("source")
+            if not repo_name or not source_rel:
+                raise KeyError(
+                    f"Tutorial {tutorial.get('name', '<unnamed>')} must define repo and source unless create_only is true."
+                )
 
-        if repo_name not in repo_entries:
-            raise KeyError(
-                f"Tutorial {tutorial['name']} references unknown repo {repo_name!r}."
-            )
+            if repo_name not in repo_entries:
+                raise KeyError(
+                    f"Tutorial {tutorial['name']} references unknown repo {repo_name!r}."
+                )
 
-        repo_entry = repo_entries[repo_name]
-        source_path = get_repo_base_path(repo_entry) / source_rel
+            repo_entry = repo_entries[repo_name]
+            source_path = get_repo_base_path(repo_entry) / source_rel
         copied_path = copy_source(source_path, destination)
         if copied_path.is_dir():
             for notebook_path in copied_path.rglob("*.ipynb"):
