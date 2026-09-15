@@ -48,7 +48,7 @@ def set_notebook_kernel(path: Path) -> None:
     notebook.setdefault("metadata", {})["kernelspec"] = {
         "display_name": "Python 3 (prommis)",
         "language": "python",
-        "name": "python3",
+        "name": "prommis",
     }
 
     with path.open("w", encoding="utf-8") as notebook_file:
