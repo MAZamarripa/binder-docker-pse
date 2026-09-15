@@ -95,7 +95,7 @@
   source: costing_advanced_features-solution.ipynb
   destination: PSE Workshop 2026/Supplementary Tutorials/Costing
 
-- name: UKy_flowsheet_tutorial
+- name: UKy_flowsheet_costing_tutorial
   repo: prommis_source
   source: costing_uky_flowsheet-solution.ipynb
   destination: PSE Workshop 2026/Supplementary Tutorials/UKy Flowsheet
@@ -113,6 +113,11 @@
 - name: UKy_flowsheet_optimization_low_recovery_model
   repo: prommis_source
   source: uky_flowsheet_low_recovery.py
+  destination: PSE Workshop 2026/Supplementary Tutorials/UKy Flowsheet
+
+- name: UKy_flowsheet_tutorial
+  repo: prommis_source
+  source: uky_flowsheet-solution.ipynb
   destination: PSE Workshop 2026/Supplementary Tutorials/UKy Flowsheet
 
 - name: simple_diafiltration_tutorial
