@@ -59,9 +59,6 @@ ENV PATH="$HOME/prommis/bin:$PATH"
 # keep the prefix-based environment first when Bash starts
 RUN echo 'export PATH="$HOME/prommis/bin:$PATH"' > ~/.bashrc
 
-# run idaes get-extensions
-RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prommis/bin
-
 # clone ProMMiS sources for docs/tutorials
 ARG PROMMIS_REF=main
 ARG WATERTAP_REF=main
@@ -86,6 +83,21 @@ RUN wget -q \
         --strip-components=1 \
         -C "${HOME}/prommis-source" \
     && rm /tmp/prommis.tar.gz
+
+# install prommis from the cloned source so the package matches PROMMIS_REF
+# (this also pulls in idaes-pse, needed by the idaes get-extensions step below)
+# setuptools-scm can't infer a version from a tarball without git metadata, so pin one
+RUN SETUPTOOLS_SCM_PRETEND_VERSION_FOR_PROMMIS=0.0.0 \
+    ${HOME}/prommis/bin/pip install -e "${HOME}/prommis-source[dev]"
+
+# run idaes get-extensions
+RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prommis/bin
+
+# register a named kernelspec so JupyterLab shows the correct kernel label
+RUN ${HOME}/prommis/bin/python -m ipykernel install \
+    --prefix ${HOME}/prommis \
+    --name prommis \
+    --display-name "Python 3 (prommis)"
 
 # copy the repository files into the correct destinations
 RUN wget -q \
