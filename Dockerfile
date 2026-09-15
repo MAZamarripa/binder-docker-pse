@@ -106,6 +106,10 @@ COPY --chown=${NB_UID}:${NB_UID} repos.yaml ${HOME}/repos.yaml
 # COPY --chown=${NB_UID}:${NB_UID} tutorials.yaml ${HOME}/tutorials.yaml
 COPY --chown=${NB_UID}:${NB_UID} tutorials_pse_workshop.yaml ${HOME}/tutorials_pse_workshop.yaml
 
+# copy local files for the PSE2026 tutorial
+# copy the full tutorial folder to the docker image
+COPY --chown=${NB_UID}:${NB_UID} tutorials/ ${HOME}/tutorials/
+
 # copy the python file
 COPY --chown=${NB_UID}:${NB_UID} create_examples_structure.py ${HOME}/create_examples_structure.py
 
