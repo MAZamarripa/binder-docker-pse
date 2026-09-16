@@ -59,9 +59,6 @@ ENV PATH="$HOME/prommis/bin:$PATH"
 # keep the prefix-based environment first when Bash starts
 RUN echo 'export PATH="$HOME/prommis/bin:$PATH"' > ~/.bashrc
 
-# run idaes get-extensions
-RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prommis/bin
-
 # clone ProMMiS sources for docs/tutorials
 ARG PROMMIS_REF=main
 ARG WATERTAP_REF=main
@@ -87,6 +84,21 @@ RUN wget -q \
         -C "${HOME}/prommis-source" \
     && rm /tmp/prommis.tar.gz
 
+# install prommis from the cloned source so the package matches PROMMIS_REF
+# (this also pulls in idaes-pse, needed by the idaes get-extensions step below)
+# setuptools-scm can't infer a version from a tarball without git metadata, so pin one
+RUN SETUPTOOLS_SCM_PRETEND_VERSION_FOR_PROMMIS=0.0.0 \
+    ${HOME}/prommis/bin/pip install -e "${HOME}/prommis-source[dev]"
+
+# run idaes get-extensions
+RUN conda run -p ${HOME}/prommis idaes get-extensions --to /home/${NB_USER}/prommis/bin
+
+# register a named kernelspec so JupyterLab shows the correct kernel label
+RUN ${HOME}/prommis/bin/python -m ipykernel install \
+    --prefix ${HOME}/prommis \
+    --name prommis \
+    --display-name "Python 3 (prommis)"
+
 # copy the repository files into the correct destinations
 RUN wget -q \
     https://github.com/dowlinglab/doe-greybox-paper/archive/refs/heads/${DOE_REF}.tar.gz \
@@ -105,6 +117,10 @@ COPY --chown=${NB_UID}:${NB_UID} jupyter_server_config.py \
 COPY --chown=${NB_UID}:${NB_UID} repos.yaml ${HOME}/repos.yaml
 # COPY --chown=${NB_UID}:${NB_UID} tutorials.yaml ${HOME}/tutorials.yaml
 COPY --chown=${NB_UID}:${NB_UID} tutorials_pse_workshop.yaml ${HOME}/tutorials_pse_workshop.yaml
+
+# copy local files for the PSE2026 tutorial
+# copy the full tutorial folder to the docker image
+COPY --chown=${NB_UID}:${NB_UID} tutorials/ ${HOME}/tutorials/
 
 # copy the python file
 COPY --chown=${NB_UID}:${NB_UID} create_examples_structure.py ${HOME}/create_examples_structure.py
